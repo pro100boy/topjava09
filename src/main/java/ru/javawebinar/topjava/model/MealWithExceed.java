@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.model;
 
+import ru.javawebinar.topjava.util.TimeUtil;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -9,7 +11,7 @@ import java.time.format.FormatStyle;
  */
 public class MealWithExceed {
     private final LocalDateTime dateTime;
-    private final String dateTimeStr;
+    private String dateTimeStr;
     private final String description;
 
     private final int calories;
@@ -21,11 +23,10 @@ public class MealWithExceed {
         this.description = description;
         this.calories = calories;
         this.exceed = exceed;
-        this.dateTimeStr = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).format(dateTime);
     }
 
     public String getDateTimeStr() {
-        return dateTimeStr;
+        return TimeUtil.getLocalDateTimeStr(dateTime);
     }
 
     public LocalDateTime getDateTime() {
