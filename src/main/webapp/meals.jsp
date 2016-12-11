@@ -26,7 +26,8 @@
             <c:otherwise> <tr bgcolor="#90ee90"> </c:otherwise>
         </c:choose>
 
-        <td><c:out value="${mealLoopCount.count}"/></td>
+        <td><c:out value="${meal.id}"/></td>
+        <%--<td><c:out value="${mealLoopCount.count}"/></td>--%>
         <td><c:out value="${meal.dateTimeStr}"/></td>
         <%--<td><c:out value="${meal.getDateTime().toString().replace(\"T\",\" \")}"/></td>--%>
         <%--<td><fmt:formatDate pattern="yyyy-MMM-dd" value="<%=new java.util.Date()%>" /></td>--%>
