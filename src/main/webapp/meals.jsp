@@ -28,6 +28,7 @@
 
         <td><c:out value="${mealLoopCount.count}"/></td>
         <td><c:out value="${meal.dateTimeStr}"/></td>
+        <%--<td><c:out value="${meal.getDateTime().toString().replace(\"T\",\" \")}"/></td>--%>
         <%--<td><fmt:formatDate pattern="yyyy-MMM-dd" value="<%=new java.util.Date()%>" /></td>--%>
         <td><c:out value="${meal.description}"/></td>
         <td><c:out value="${meal.calories}"/></td>
