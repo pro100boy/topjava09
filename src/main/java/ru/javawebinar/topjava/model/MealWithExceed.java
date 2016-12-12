@@ -3,15 +3,13 @@ package ru.javawebinar.topjava.model;
 import ru.javawebinar.topjava.util.TimeUtil;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 /**
  * GKislin
  * 11.01.2015.
  */
 public class MealWithExceed {
     private final LocalDateTime dateTime;
-    private String dateTimeStr;
+
     private final String description;
 
     private final int calories;
@@ -26,10 +24,6 @@ public class MealWithExceed {
         this.calories = calories;
         this.exceed = exceed;
         this.id = id;
-    }
-
-    public String getDateTimeStr() {
-        return TimeUtil.getLocalDateTimeStr(dateTime);
     }
 
     public LocalDateTime getDateTime() {
@@ -56,7 +50,7 @@ public class MealWithExceed {
     public String toString() {
         return "MealWithExceed{" +
                 "id=" + id +
-                ", dateTimeStr='" + getDateTimeStr() + '\'' +
+                ", dateTimeStr='" + TimeUtil.getLocalDateTimeStr(dateTime) + '\'' +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
                 ", exceed=" + exceed +
