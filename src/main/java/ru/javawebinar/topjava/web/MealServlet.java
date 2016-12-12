@@ -37,11 +37,12 @@ public class MealServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if (action.equalsIgnoreCase("delete")){
-            LOG.debug("delete meals");
-            int userId = Integer.parseInt(req.getParameter("id"));
-            //mealDAO.deleteUser(userId);
+            int id = Integer.parseInt(req.getParameter("id"));
+            LOG.debug("delete meals " + id);
+            mealDAO.deleteMeal(id);
             forward = LIST_MEAL;
-            //req.setAttribute("meals", mealDAO.getAllMeal());
+            List<MealWithExceed> mealsWithExceeded = MealsUtil.getFilteredWithExceeded(mealDAO.getAllMeal(), LocalTime.MIN, LocalTime.MAX, 2000);
+            req.setAttribute("meals", mealsWithExceeded);
         } /*else if (action.equalsIgnoreCase("edit")){
             LOG.debug("edit meals");
             forward = INSERT_OR_EDIT;
