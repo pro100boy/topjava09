@@ -50,6 +50,15 @@ public class MealDAOMemoryImpl implements MealDAO {
         System.out.println(" ");
         mealDAOMemory.deleteMeal(9);
         meals.forEach(System.out::println);
+    }
 
+    @Override
+    public Meal getMealById(int id) {
+        Meal meal = null;
+        for (Meal m : meals)
+        {
+            if (id == m.getId()) meal = m;
+        }
+        return meal;
     }
 }

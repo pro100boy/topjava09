@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="f" uri="functions.tld" %>
 <html>
 <head>
     <title>Добавить/редактировать еду</title>
@@ -14,7 +15,8 @@
     Калории : <input type="text" name="calories"
                 value="<c:out value="${meal.calories}" />"/> <br/>
     Дата : <input type="text" name="datetime"
-                value="<fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${meal.dateTime}" />"/> <br/>
+                value="${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy HH:mm')}"/> <br/>
+
     <br/>
     <input type="submit" value="Готово"/>
 </form>

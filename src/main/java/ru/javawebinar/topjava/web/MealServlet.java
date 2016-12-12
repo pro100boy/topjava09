@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.web;
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.dao.MealDAO;
 import ru.javawebinar.topjava.dao.impl.MealDAOMemoryImpl;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
@@ -40,24 +41,27 @@ public class MealServlet extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("id"));
             LOG.debug("delete meals " + id);
             mealDAO.deleteMeal(id);
-            forward = LIST_MEAL;
-            List<MealWithExceed> mealsWithExceeded = MealsUtil.getFilteredWithExceeded(mealDAO.getAllMeal(), LocalTime.MIN, LocalTime.MAX, 2000);
-            req.setAttribute("meals", mealsWithExceeded);
-        } /*else if (action.equalsIgnoreCase("edit")){
-            LOG.debug("edit meals");
+            forward = getPage(req);
+        } else if (action.equalsIgnoreCase("edit")){
             forward = INSERT_OR_EDIT;
-            int userId = Integer.parseInt(req.getParameter("id"));
-            User user = mealDAO.getUserById(userId);
-            req.setAttribute("user", user);
-        }*/ else if (action.equalsIgnoreCase("listMeal")){
-            forward = LIST_MEAL;
-            List<MealWithExceed> mealsWithExceeded = MealsUtil.getFilteredWithExceeded(mealDAO.getAllMeal(), LocalTime.MIN, LocalTime.MAX, 2000);
-            req.setAttribute("meals", mealsWithExceeded);
+            int id = Integer.parseInt(req.getParameter("id"));
+            LOG.debug("edit meals " + id);
+            Meal meal = mealDAO.getMealById(id);
+            req.setAttribute("meal", meal);
+        } else if (action.equalsIgnoreCase("listMeal")){
+            forward = getPage(req);
         } else {
             forward = INSERT_OR_EDIT;
         }
 
-
         req.getRequestDispatcher(forward).forward(req, resp);
+    }
+
+    private String getPage(HttpServletRequest req) {
+        String forward;
+        forward = LIST_MEAL;
+        List<MealWithExceed> mealsWithExceeded = MealsUtil.getFilteredWithExceeded(mealDAO.getAllMeal(), LocalTime.MIN, LocalTime.MAX, 2000);
+        req.setAttribute("meals", mealsWithExceeded);
+        return forward;
     }
 }
