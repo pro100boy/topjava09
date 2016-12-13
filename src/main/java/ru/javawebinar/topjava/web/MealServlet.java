@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -32,29 +35,59 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOG.debug("redirect to meals");
-
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html;charset=utf-8");
         // actions processing
-        String forward="";
+        String forwardStr = "";
         String action = req.getParameter("action");
 
-        if (action.equalsIgnoreCase("delete")){
+        if (action.equalsIgnoreCase("delete")) {
             int id = Integer.parseInt(req.getParameter("id"));
             LOG.debug("delete meals " + id);
             mealDAO.deleteMeal(id);
-            forward = getPage(req);
-        } else if (action.equalsIgnoreCase("edit")){
-            forward = INSERT_OR_EDIT;
+            forwardStr = getPage(req);
+        } else if (action.equalsIgnoreCase("edit")) {
+            forwardStr = INSERT_OR_EDIT;
             int id = Integer.parseInt(req.getParameter("id"));
             LOG.debug("edit meals " + id);
             Meal meal = mealDAO.getMealById(id);
             req.setAttribute("meal", meal);
-        } else if (action.equalsIgnoreCase("listMeal")){
-            forward = getPage(req);
+        } else if (action.equalsIgnoreCase("listMeal")) {
+            forwardStr = getPage(req);
         } else {
-            forward = INSERT_OR_EDIT;
+            forwardStr = INSERT_OR_EDIT;
         }
 
-        req.getRequestDispatcher(forward).forward(req, resp);
+        req.getRequestDispatcher(forwardStr).forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html;charset=utf-8");
+        Meal meal = new Meal();
+        meal.setDescription(req.getParameter("description"));
+        meal.setCalories(Integer.parseInt(req.getParameter("calories")));
+        try {
+            String dateTimeStr = req.getParameter("datetime");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr, formatter);
+            meal.setDateTime(dateTime);
+        } catch (DateTimeParseException e) {
+            LOG.debug(e.getMessage());
+            e.printStackTrace();
+        }
+
+        String id = req.getParameter("id");
+        if (id == null || id.isEmpty()) {
+            mealDAO.addMeal(meal);
+        } else {
+            meal.setId(Integer.parseInt(id));
+            mealDAO.updateMeal(meal);
+        }
+
+        String forwardStr = getPage(req);
+        req.getRequestDispatcher(forwardStr).forward(req, resp);
     }
 
     private String getPage(HttpServletRequest req) {

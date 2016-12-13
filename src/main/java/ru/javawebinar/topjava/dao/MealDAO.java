@@ -7,4 +7,6 @@ public interface MealDAO {
     List<Meal> getAllMeal();
     void deleteMeal(int id);
     Meal getMealById(int id);
+    void addMeal(Meal meal);
+    void updateMeal(Meal meal);
 }

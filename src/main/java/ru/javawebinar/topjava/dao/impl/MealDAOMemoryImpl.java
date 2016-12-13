@@ -33,11 +33,46 @@ public class MealDAOMemoryImpl implements MealDAO {
 
     @Override
     public void deleteMeal(int id) {
-        ListIterator<Meal> iterator = meals.listIterator();
-        while (iterator.hasNext()) {
+        for (ListIterator<Meal> iterator = meals.listIterator(); iterator.hasNext(); ) {
             Meal m = iterator.next();
             if (id == m.getId()) {
                 iterator.remove();
+                break;
+            }
+        }
+    }
+
+    @Override
+    public Meal getMealById(int id) {
+        Meal meal = null;
+        for (ListIterator<Meal> iterator = meals.listIterator(); iterator.hasNext(); ) {
+            Meal m = iterator.next();
+            if (id == m.getId()) {
+                meal = m;
+                break;
+            }
+        }
+        return meal;
+    }
+
+    @Override
+    public void addMeal(Meal meal) {
+        // определяем max id
+        id.set(meals
+                .stream()
+                .mapToInt(Meal::getId)
+                .max()
+                .getAsInt());
+        meal.setId(id.incrementAndGet());
+        meals.add(meal);
+    }
+
+    @Override
+    public void updateMeal(Meal meal) {
+        for (ListIterator<Meal> iterator = meals.listIterator(); iterator.hasNext(); ) {
+            Meal m = iterator.next();
+            if (meal.getId() == m.getId()) {
+                iterator.set(meal);
                 break;
             }
         }
@@ -49,16 +84,21 @@ public class MealDAOMemoryImpl implements MealDAO {
         meals.forEach(System.out::println);
         System.out.println(" ");
         mealDAOMemory.deleteMeal(9);
+        mealDAOMemory.deleteMeal(7);
+        mealDAOMemory.deleteMeal(1);
         meals.forEach(System.out::println);
-    }
 
-    @Override
-    public Meal getMealById(int id) {
-        Meal meal = null;
-        for (Meal m : meals)
-        {
-            if (id == m.getId()) meal = m;
-        }
-        return meal;
+        mealDAOMemory.addMeal(new Meal(0, LocalDateTime.of(2017, Month.APRIL, 20, 20, 0), "Ужин", 910));
+        System.out.println(" ");
+        meals.forEach(System.out::println);
+
+        Meal m = new Meal();
+        m.setId(2);
+        m.setDescription("Новая еда");
+        m.setCalories(6000);
+        m.setDateTime(LocalDateTime.now());
+        mealDAOMemory.updateMeal(m);
+        System.out.println(" ");
+        meals.forEach(System.out::println);
     }
 }
