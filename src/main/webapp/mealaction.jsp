@@ -16,7 +16,7 @@
     Калории : <input type="text" name="calories"
                 value="<c:out value="${meal.calories}" />"/> <br/><br/>
     Дата : <input type="text" name="datetime"
-                value="${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy HH:mm')}"/> <br/>
+                value="${f:formatLocalDateTime(meal.dateTime)}"/> <br/>
 
     <br/>
     <input type="submit" value="Готово"/>

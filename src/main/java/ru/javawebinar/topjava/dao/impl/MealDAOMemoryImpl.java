@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MealDAOMemoryImpl implements MealDAO {
-    private AtomicInteger id = new AtomicInteger(0);
+    private static final AtomicInteger id = new AtomicInteger(0);
     private final List<Meal> meals;
 
     public MealDAOMemoryImpl() {
@@ -58,11 +58,11 @@ public class MealDAOMemoryImpl implements MealDAO {
     @Override
     public void addMeal(Meal meal) {
         // определяем max id
-        id.set(meals
+        /*id.set(meals
                 .stream()
                 .mapToInt(Meal::getId)
                 .max()
-                .getAsInt());
+                .getAsInt());*/
         meal.setId(id.incrementAndGet());
         meals.add(meal);
     }

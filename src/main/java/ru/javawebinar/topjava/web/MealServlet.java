@@ -40,23 +40,28 @@ public class MealServlet extends HttpServlet {
         // actions processing
         String forwardStr = "";
         String action = req.getParameter("action");
+        Integer id = null;
 
-        if (action.equalsIgnoreCase("delete")) {
-            int id = Integer.parseInt(req.getParameter("id"));
-            LOG.debug("delete meals " + id);
+        if (req.getParameter("id") != null) {
+            try {
+                id = Integer.parseInt(req.getParameter("id"));
+            } catch (NumberFormatException e) {
+                LOG.debug(String.format("problem with id parsing: %s", req.getParameter("id")));
+            }
+        }
+
+        if ("delete".equalsIgnoreCase(action)) {
+            LOG.debug("redirected to delete meal");
             mealDAO.deleteMeal(id);
             forwardStr = getPage(req);
-        } else if (action.equalsIgnoreCase("edit")) {
+        } else if ("edit".equalsIgnoreCase(action) || "insert".equalsIgnoreCase(action)) {
+            LOG.debug("redirected to add/edit page");
             forwardStr = INSERT_OR_EDIT;
-            int id = Integer.parseInt(req.getParameter("id"));
-            LOG.debug("edit meals " + id);
-            Meal meal = mealDAO.getMealById(id);
+            Meal meal = null;
+            if (id != null)
+                meal = mealDAO.getMealById(id);
             req.setAttribute("meal", meal);
-        } else if (action.equalsIgnoreCase("listMeal")) {
-            forwardStr = getPage(req);
-        } else {
-            forwardStr = INSERT_OR_EDIT;
-        }
+        } else forwardStr = getPage(req);
 
         req.getRequestDispatcher(forwardStr).forward(req, resp);
     }

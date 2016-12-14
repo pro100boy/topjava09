@@ -32,7 +32,8 @@
 
 
             <td style="display:none;"><c:out value="${meal.id}"/></td>
-            <td><c:out value="${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy HH:mm')}"/></td>
+            <td><c:out value="${f:formatLocalDateTime(meal.dateTime)}"/></td>
+        <%--<td><c:out value="${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy HH:mm')}"/></td>--%>
             <%--<td><c:out value="${ru.javawebinar.topjava.util.TimeUtil.formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy HH:mm')}"/></td>--%>
             <%--<td><c:out value="${DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).format(meal.dateTime)}"/></td>--%>
             <%--<td><c:out value="${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy')}"/></td>--%>
@@ -49,6 +50,6 @@
     </tbody>
 </table>
 <p><a href="meals?action=insert">Добавить еду</a></p>
-<p><a href="meals?action=listMeal">Обновить список</a></p>
+<p><a href="meals">Обновить список</a></p>
 </body>
 </html>

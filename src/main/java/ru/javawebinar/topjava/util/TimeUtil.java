@@ -26,7 +26,7 @@ public final class TimeUtil {
         return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT).format(dateTime);
     }
 
-    public static String formatLocalDateTime(LocalDateTime localDateTime, String pattern) {
+    public static String formatLocalDateTime(LocalDateTime localDateTime/*, String pattern*/) {
         if (localDateTime == null) localDateTime = LocalDateTime.now();
         //return localDateTime.format(DateTimeFormatter.ofPattern(pattern));
         return localDateTime.format(dateTimeFormatter);
