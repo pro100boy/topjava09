@@ -14,6 +14,9 @@ public class MealDAOMemoryImpl implements MealDAO {
 
     public MealDAOMemoryImpl() {
         this.meals = Collections.synchronizedList(new ArrayList<Meal>() {{
+            add(new Meal(id.incrementAndGet(), LocalDateTime.of(2017, Month.APRIL, 20, 10, 0), "Завтрак", 400));
+            add(new Meal(id.incrementAndGet(), LocalDateTime.of(2017, Month.APRIL, 20, 13, 0), "Обед", 500));
+            add(new Meal(id.incrementAndGet(), LocalDateTime.of(2017, Month.APRIL, 20, 20, 0), "Ужин", 910));
             add(new Meal(id.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
             add(new Meal(id.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
             add(new Meal(id.incrementAndGet(), LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500));
