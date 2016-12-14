@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="f" uri="functions.tld" %>
+<%@ page import="java.time.LocalDateTime" %>
+
 <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 <style type="text/css">
     .myrow-container {
@@ -47,8 +49,8 @@
                     <label class="control-label col-xs-3" for="datetime">Дата:</label>
                     <div class="col-xs-6">
                         <input type="datetime-local" class="form-control" name="datetime" id="datetime"
-                               placeholder="дд.мм.гггг чч:мм"
-                               value="<c:out value="${f:formatLocalDateTime(meal.dateTime)}" />"/>
+                               placeholder="ДД.ММ.ГГГГ чч:мм"
+                               value="${f:getLocalDateTime(meal.dateTime)}"/>
                     </div>
                 </div>
 

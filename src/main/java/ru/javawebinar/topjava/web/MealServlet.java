@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,10 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
-
+@WebServlet(
+        urlPatterns = "/meals",
+        loadOnStartup = 1
+)
 public class MealServlet extends HttpServlet {
     private static final Logger LOG = getLogger(MealServlet.class);
     private MealDAO mealDAO;
@@ -75,8 +79,8 @@ public class MealServlet extends HttpServlet {
         meal.setCalories(Integer.parseInt(req.getParameter("calories")));
         try {
             String dateTimeStr = req.getParameter("datetime");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-            LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr, formatter);
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr/*, formatter*/);
             meal.setDateTime(dateTime);
         } catch (DateTimeParseException e) {
             LOG.debug(e.getMessage());

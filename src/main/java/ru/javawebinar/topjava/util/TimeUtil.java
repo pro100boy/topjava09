@@ -31,4 +31,8 @@ public final class TimeUtil {
         //return localDateTime.format(DateTimeFormatter.ofPattern(pattern));
         return localDateTime.format(dateTimeFormatter);
     }
+
+    public static LocalDateTime getLocalDateTime(LocalDateTime localDateTime) {
+        return (localDateTime == null) ? LocalDateTime.now().withSecond(0).withNano(0) : localDateTime;
+    }
 }
