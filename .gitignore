@@ -5,3 +5,4 @@ target
 log
 *.patch
 src/main/webapp/resources/
+/docs_and_patches/
