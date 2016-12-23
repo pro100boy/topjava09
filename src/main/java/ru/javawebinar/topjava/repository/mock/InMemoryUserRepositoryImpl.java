@@ -57,7 +57,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     public User getByEmail(String email) {
         Objects.requireNonNull(email);
         return repository.values().stream()
-                .filter(u -> email.equals(u.getEmail()))
+                .filter(u -> email.equalsIgnoreCase(u.getEmail()))
                 .findFirst()
                 .orElse(null);
     }
