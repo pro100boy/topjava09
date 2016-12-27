@@ -31,6 +31,9 @@ CREATE TABLE meals
   dateTime TIMESTAMP DEFAULT now(),
   description VARCHAR(255) NOT NULL,
   calories INT NOT NULL DEFAULT 0,
-  user_id INT NOT NULL
+  user_id INT NOT NULL,
+  CONSTRAINT user_meals_fkey FOREIGN KEY (user_id)
+  REFERENCES public.users (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX meals_id_uindex ON meals (id);

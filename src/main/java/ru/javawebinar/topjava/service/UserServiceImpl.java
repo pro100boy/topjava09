@@ -20,7 +20,7 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    @Qualifier("inMemoryUserRepositoryImpl")
+    @Qualifier("jdbcUserRepositoryImpl")
     private UserRepository repository;
 
     @Override

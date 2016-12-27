@@ -19,7 +19,7 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 public class MealServiceImpl implements MealService {
 
     @Autowired
-    @Qualifier("inMemoryMealRepositoryImpl")
+    @Qualifier("jdbcMealRepositoryImpl")
     private MealRepository repository;
 
     @Override
