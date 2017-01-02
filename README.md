@@ -1,5 +1,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/47faf2d704da4d17abcb2aab757a05ab)](https://www.codacy.com/app/gpg/topjava09?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pro100boy/topjava09&amp;utm_campaign=Badge_Grade)
-
+[![Build Status](https://travis-ci.org/pro100boy/topjava09.svg?branch=master)](https://travis-ci.org/pro100boy/topjava09)
+[![Dependency Status](https://dependencyci.com/github/pro100boy/topjava09/badge)](https://dependencyci.com/github/pro100boy/topjava09)
 Java Enterprise Online Project 
 ===============================
 
