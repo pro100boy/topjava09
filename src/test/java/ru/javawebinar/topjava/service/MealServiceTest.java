@@ -47,20 +47,8 @@ public class MealServiceTest {
     public TestRule globalTimeout = new Timeout(10000, TimeUnit.MILLISECONDS);
 
     @Test
-    public void testDelete() throws Exception {
-        service.delete(MealTestData.MEAL1_ID, USER_ID);
-        MATCHER.assertCollectionEquals(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2), service.getAll(USER_ID));
-    }
-
-    @Test
     public void withoutResourcesUsage() throws Exception {
         System.out.println("simply string out");
-    }
-
-    @Test
-    public void testDeleteNotFound() throws Exception {
-        exception.expect(NotFoundException.class);
-        service.delete(MEAL1_ID, 1);
     }
 
     private static final int DELETE_ITERATION_COUNT = 5;
@@ -116,6 +104,24 @@ public class MealServiceTest {
         assertThat(testResult, failureCountIs(DELETE_ITERATION_COUNT));
     }
 
+    @Test
+    public void testDelete() throws Exception {
+        service.delete(MealTestData.MEAL1_ID, USER_ID);
+        MATCHER.assertCollectionEquals(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2), service.getAll(USER_ID));
+    }
+
+    /*
+    @Test(expected = NotFoundException.class)
+    public void testDeleteNotFound() throws Exception {
+        service.delete(MEAL1_ID, 1);
+    }
+     */
+
+    @Test
+    public void testDeleteNotFound() throws Exception {
+        exception.expect(NotFoundException.class);
+        service.delete(MEAL1_ID, 1);
+    }
 
     @Test
     public void testSave() throws Exception {
@@ -135,6 +141,12 @@ public class MealServiceTest {
         exception.expect(NotFoundException.class);
         service.get(MEAL1_ID, ADMIN_ID);
     }
+    /*
+    @Test(expected = NotFoundException.class)
+    public void testGetNotFound() throws Exception {
+        service.get(MEAL1_ID, ADMIN_ID);
+    }
+     */
 
     @Test
     public void testUpdate() throws Exception {
@@ -144,11 +156,17 @@ public class MealServiceTest {
     }
 
     @Test
-    public void testNotFoundUpdate() throws Exception {
+    public void testUpdateNotFound() throws Exception {
         exception.expect(NotFoundException.class);
-        Meal item = service.get(MEAL1_ID, USER_ID);
-        service.update(item, ADMIN_ID);
+        service.update(MEAL1, ADMIN_ID);
     }
+
+    /*
+    @Test(expected = NotFoundException.class)
+    public void testUpdateNotFound() throws Exception {
+        service.update(MEAL1, ADMIN_ID);
+    }
+     */
 
     @Test
     public void testGetAll() throws Exception {
