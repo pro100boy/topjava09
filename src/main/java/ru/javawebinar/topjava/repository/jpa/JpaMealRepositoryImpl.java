@@ -1,14 +1,12 @@
 package ru.javawebinar.topjava.repository.jpa;
 
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,10 +22,20 @@ public class JpaMealRepositoryImpl implements MealRepository {
     @Transactional
     public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
+            User ref = em.getReference(User.class, userId);
+            meal.setUser(ref);
             em.persist(meal);
             return meal;
         } else {
-            return em.merge(meal);
+            if (em.createNamedQuery(Meal.UPDATE) //традиционный вариант - такое уже было. Испытаем новенькое
+                    .setParameter(3, meal.getDateTime())
+                    .setParameter(1, meal.getDescription())
+                    .setParameter(2, meal.getCalories())
+                    .setParameter(4, meal.getId())
+                    .setParameter(5, userId)
+                    .executeUpdate()
+                    == 0) return null;
+            return meal;
         }
     }
 
@@ -39,7 +47,15 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-        return DataAccessUtils.singleResult(em.createQuery("SELECT m FROM Meal m WHERE m.user.id=:userId AND m.id=:id").setParameter("id", id).setParameter("userId", userId).getResultList());
+        try {
+            return em.createNamedQuery(Meal.BY_ID, Meal.class)
+                    .setParameter("id", id)
+                    .setParameter("user_id", userId)
+                    .getSingleResult();
+        } catch (Exception e) {
+            e.getStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -49,6 +65,10 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return null;
+        return em.createNamedQuery(Meal.BETWEEN, Meal.class)
+                .setParameter("user_id", userId)
+                .setParameter("start_date", startDate)
+                .setParameter("end_date", endDate)
+                .getResultList();
     }
 }

@@ -4,14 +4,17 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @NamedQueries({
         @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id AND m.user.id=:userId"),
-        //@NamedQuery(name = Meal.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
+        @NamedQuery(name = Meal.UPDATE, query = "UPDATE Meal m SET m.description=?1, m.calories=?2, m.dateTime=?3 WHERE m.id=?4 AND m.user.id=?5"),
         @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m WHERE m.user.id=:userId ORDER BY m.dateTime DESC"),
+        @NamedQuery(name = Meal.BY_ID, query = "SELECT m FROM Meal m WHERE m.id=:id AND m.user.id=:user_id"),
+        @NamedQuery(name = Meal.BETWEEN, query = "SELECT m FROM Meal m WHERE m.user.id=:user_id AND m.dateTime BETWEEN :start_date AND :end_date ORDER BY m.dateTime DESC")
 })
 @Entity
 @Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "meals_unique_user_datetime_idx")})
@@ -19,20 +22,24 @@ public class Meal extends BaseEntity {
 
     public static final String DELETE = "Meal.delete";
     public static final String ALL_SORTED = "Meal.getAllSorted";
-    //public static final String BY_EMAIL = "Meal.getByEmail";
+    public static final String UPDATE = "Meal.update";
+    public static final String BETWEEN = "Meal.getBetween";
+    public static final String BY_ID = "Meal.getById";
 
     @Column(name = "date_time", columnDefinition = "timestamp default now()", nullable = false)
     private LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false, columnDefinition = "text")
     @NotEmpty
-    @Length(max = 255)
+    @Length(min = 4, max = 255)
     private String description;
 
     @Column(name = "calories", columnDefinition = "int default 1000")
+    @Digits(fraction = 0, integer = 4)
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id") //явно укажем оба поля - универсальней на случай нестандартных имен полей
     private User user;
 
     public Meal() {
