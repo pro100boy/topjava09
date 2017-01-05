@@ -4,7 +4,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.results.PrintableResult;
 import org.junit.rules.*;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -33,6 +36,7 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
+    private static final Logger LOG = LoggerFactory.getLogger(MealServiceTest.class);
 
     @Autowired
     protected MealService service;
@@ -54,6 +58,37 @@ public class MealServiceTest {
     private static final int DELETE_ITERATION_COUNT = 5;
 
     private static MealService serv;
+
+/*    @Rule
+    public TestWatcher watcher = new TestWatcher() {
+
+        private double testTime;
+
+        @Override
+        protected void starting(Description description) {
+            testTime = System.nanoTime();
+            //System.out.println("starting");
+        }
+
+        @Override
+        protected void finished(Description description) {
+            System.out.println(description.getMethodName() + "finished. Time: " + String.valueOf(System.nanoTime() - testTime) + " ns");
+        }
+    };*/
+
+    @Rule
+    // http://stackoverflow.com/a/27868954/7203956
+    public Stopwatch stopwatch = new Stopwatch() {
+        private void logInfo(Description description, long nanos) {
+            LOG.warn(String.format("+++ Test %s spent %d microseconds",
+                    description.getMethodName(), TimeUnit.NANOSECONDS.toMicros(nanos)));
+        }
+
+        @Override
+        protected void finished(long nanos, Description description) {
+            logInfo(description, nanos);
+        }
+    };
 
     @Rule
     public ExternalResource resource = new ExternalResource() {
