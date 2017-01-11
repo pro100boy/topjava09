@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -27,6 +28,7 @@ public class Meal extends BaseEntity {
     public static final String BY_ID = "Meal.getById";
 
     @Column(name = "date_time", columnDefinition = "timestamp default now()", nullable = false)
+    @NotNull
     private LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false, columnDefinition = "text")
@@ -36,6 +38,7 @@ public class Meal extends BaseEntity {
 
     @Column(name = "calories", columnDefinition = "int default 1000")
     @Digits(fraction = 0, integer = 4)
+    @NotNull
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)

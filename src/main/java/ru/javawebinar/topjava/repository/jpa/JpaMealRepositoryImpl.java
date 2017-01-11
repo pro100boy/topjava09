@@ -27,7 +27,7 @@ public class JpaMealRepositoryImpl implements MealRepository {
             em.persist(meal);
             return meal;
         } else {
-            if (em.createNamedQuery(Meal.UPDATE) //традиционный вариант - такое уже было. Испытаем новенькое
+            if (em.createNamedQuery(Meal.UPDATE)
                     .setParameter(3, meal.getDateTime())
                     .setParameter(1, meal.getDescription())
                     .setParameter(2, meal.getCalories())
