@@ -21,8 +21,6 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertThat;
@@ -79,15 +77,15 @@ public class MealServiceTest {
         }
     };*/
 
-    private static Map<String, Long> testsCompleteMap = new HashMap<>();
+    private static StringBuilder testsComplete = new StringBuilder();
 
     @Rule
     // http://stackoverflow.com/a/27868954/7203956
     public Stopwatch stopwatch = new Stopwatch() {
         private void logInfo(Description description, long nanos) {
-            LOG.warn(String.format("+++ Test %s spent %d microseconds",
-                    description.getMethodName(), TimeUnit.NANOSECONDS.toMicros(nanos)));
-            testsCompleteMap.put(description.getMethodName(), TimeUnit.NANOSECONDS.toMicros(nanos));
+            LOG.info(String.format("+++ Test %s spent %d microseconds",
+                    description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos)));
+            testsComplete.append(description.getMethodName() + " >> " + TimeUnit.NANOSECONDS.toMillis(nanos) + " ms\n");
         }
 
         @Override
@@ -99,7 +97,7 @@ public class MealServiceTest {
     @AfterClass
     public static void printTestsCompleteTime()
     {
-        LOG.info(testsCompleteMap.entrySet().toString());
+        LOG.info(testsComplete.toString());
         //testsCompleteMap.entrySet().stream().forEach(System.out::println);
     }
 
