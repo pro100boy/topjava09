@@ -67,4 +67,18 @@ public class JpaMealRepositoryImpl implements MealRepository {
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate).getResultList();
     }
+
+    @Override
+    public List<Meal> getAllWithUser(int userId) {
+        List<Meal> meals = getAll(userId);
+        if (!meals.isEmpty()) meals.iterator().next().getUser().getId(); //весь список не нужен - юзер один на всех
+        return meals;
+    }
+
+    @Override
+    public Meal getWithUser(int id, int userId) {
+        Meal meal = get(id, userId);
+        if (meal != null) meal.getUser().getId();
+        return meal;
+    }
 }

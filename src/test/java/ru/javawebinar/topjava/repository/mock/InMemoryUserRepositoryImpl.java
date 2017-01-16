@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -70,5 +71,20 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
                 .filter(u -> email.equalsIgnoreCase(u.getEmail()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public Collection<User> getAllWithMeals() {
+        return null;
+    }
+
+    @Override
+    public User getWithMeals(int id) {
+        return null;
+    }
+
+    @Override
+    public User updateLazy(User user){
+        return null;
     }
 }

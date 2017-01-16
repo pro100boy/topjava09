@@ -97,6 +97,10 @@ public class Meal extends BaseEntity {
         return user;
     }
 
+    public Meal(Meal userMeal) {
+        this(userMeal.getId(), userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories());
+    }
+
     public void setUser(User user) {
         this.user = user;
     }

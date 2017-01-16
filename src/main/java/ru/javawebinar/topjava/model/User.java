@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,15 +32,15 @@ public class User extends NamedEntity {
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
-    private String email;
+    protected String email;
 
     @Column(name = "password", nullable = false)
     @NotBlank
     @Length(min = 5)
-    private String password;
+    protected String password;
 
     @Column(name = "enabled", nullable = false)
-    private boolean enabled = true;
+    protected boolean enabled = true;
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
     private Date registered = new Date();
@@ -48,11 +49,18 @@ public class User extends NamedEntity {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    protected Set<Role> roles;
 
     @Column(name = "calories_per_day", columnDefinition = "int default 2000")
     @Digits(fraction = 0, integer = 4)
-    private int caloriesPerDay = MealsUtil.DEFAULT_CALORIES_PER_DAY;
+    protected int caloriesPerDay = MealsUtil.DEFAULT_CALORIES_PER_DAY;
+
+    @OneToMany(fetch = FetchType.LAZY, //от LAZY не отказываемся, не упрощаем жизнь. НО работать должно и для EAGER
+            mappedBy="user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @OrderBy("dateTime DESC")
+    protected List<Meal> meals;
 
     public User() {
     }
@@ -116,6 +124,14 @@ public class User extends NamedEntity {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
+    }
+
+    public List<Meal> getMeals() {
+        return meals;
     }
 
     @Override

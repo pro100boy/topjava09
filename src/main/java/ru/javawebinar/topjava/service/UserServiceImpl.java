@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.util.Collection;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
@@ -64,5 +65,21 @@ public class UserServiceImpl implements UserService {
     @CacheEvict(value = "users", allEntries = true)
     @Override
     public void evictCache() {
+    }
+
+    @Override
+    public Collection<User> getAllWithMeals() {
+        return repository.getAllWithMeals();
+    }
+
+    @Override
+    public User getWithMeals(int id) throws NotFoundException {
+        return repository.getWithMeals(id);
+    }
+
+    @Override
+    @CacheEvict(value = "users", allEntries = true)
+    public User updateLazy(User user){
+        return repository.updateLazy(user);
     }
 }
