@@ -39,13 +39,60 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public Meal get(int id, int userId) {
-        return crudRepository.get(id, userId);
+    public List<Meal> getAll(int userId) {
+        /*
+        вариант
+        return proxy.findAllByUserIdOrderByDateTimeDesc(userId);
+
+        будет работать и так (если на вход надо дать объект)
+        return proxy.findAllByUserOrderByDateTimeDesc(user);
+        при, соответсвенно:
+        List<UserMeal> findAllByUserOrderByDateTimeDesc(User user);
+
+        МИНУС: запрос будет строиться через left join user
+        (все самогенерирующиеся запросы стремятся к завязыванию таблиц в запросах, не моможет и
+        findAllByUser_IdOrderByDateTimeDesc(userId))
+        */
+
+        //более экономный вриант (без left join user)
+        //(метод хотя и не родной, но запрос не самогенерирующийся, а указан через @Query, в котором нет связи таблиц)
+        return crudRepository.getAll(userId);
+
+
+        /*аналогично (без left join user), но излишне навороченный:
+        return proxy.findAll(new Specification<UserMeal>() {
+            @Override
+            public Predicate toPredicate(Root<UserMeal> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.equal(root.get("user"), userId);
+            }
+        }
+        , new Sort(Sort.Direction.DESC, "dateTime"));
+        */
+
     }
 
     @Override
-    public List<Meal> getAll(int userId) {
-        return crudRepository.getAll(userId);
+    public Meal get(int id, int userId) {
+        /*
+        вариант
+        return proxy.findOneByIdAndUserId(id, userId);
+        МИНУС: запрос будет строиться через left join user
+        */
+
+        //более экономный вриант (без left join user)
+        return crudRepository.get(id, userId);
+
+        /*аналогично (без left join user), но излишне навороченный:
+        return proxy.findOne(new Specification<UserMeal>() {
+            @Override
+            public Predicate toPredicate(Root<UserMeal> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("id"), id),
+                        criteriaBuilder.equal(root.get("user"), userId)
+                );
+            }
+        });
+        */
     }
 
     @Override

@@ -37,7 +37,8 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     /*
     Вариант: без @Query
     реализовано в интерфейсе, чтобы оставаться в контексте текущей Session, что необходимо для
-    возможности дергать ленивый прокси-объект*//*
+    возможности дергать ленивый прокси-объект*/
+    /*
     default public Collection<User> getAllWithMeals() {
         List<User> users = findAll(SORT_NAME_EMAIL);
         users.forEach(u -> u.getMeals().size());
