@@ -11,10 +11,6 @@ import ru.javawebinar.topjava.model.User;
 import java.util.Date;
 import java.util.List;
 
-/**
- * gkislin
- * 02.10.2016
- */
 @Transactional(readOnly = true)
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Transactional
@@ -36,7 +32,7 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     User getByEmail(String email);
 
     @Query("SELECT DISTINCT(u) FROM User u JOIN FETCH u.meals ORDER BY u.name, u.email")
-    public List<User> getAllWithMeals();
+    List<User> getAllWithMeals();
 
     /*
     Вариант: без @Query
@@ -49,7 +45,7 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     }*/
 
     @Query("SELECT DISTINCT(u) FROM User u JOIN FETCH u.meals WHERE u.id = ?1")
-    public User getWithMeals(int id);
+    User getWithMeals(int id);
 
     /*Вариант: без @Query
     реализовано в интерфейсе, чтобы оставаться в контексте текущей Session, что необходимо для
@@ -70,5 +66,5 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
             " u.registered = ?6," +
             " u.caloriesPerDay = ?7 " +
             " WHERE u.id=?1")
-    public int save(Integer id, String name, String email, String password, Boolean enabled, Date registered, Integer caloriesPerDay);
+    int save(Integer id, String name, String email, String password, Boolean enabled, Date registered, Integer caloriesPerDay);
 }

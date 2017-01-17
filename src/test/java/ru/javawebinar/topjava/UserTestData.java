@@ -10,10 +10,6 @@ import java.util.stream.Collectors;
 
 import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
 
-/**
- * GKislin
- * 24.09.2015.
- */
 public class UserTestData {
     public static final int USER_ID = START_SEQ;
     public static final int ADMIN_ID = START_SEQ + 1;

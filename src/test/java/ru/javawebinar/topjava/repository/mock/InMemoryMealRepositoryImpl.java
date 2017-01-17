@@ -14,10 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * GKislin
- * 15.09.2015.
- */
 @Repository
 public class InMemoryMealRepositoryImpl implements MealRepository {
 

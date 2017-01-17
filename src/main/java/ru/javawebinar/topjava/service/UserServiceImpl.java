@@ -15,10 +15,6 @@ import java.util.List;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 
-/**
- * GKislin
- * 06.03.2015.
- */
 @Service
 public class UserServiceImpl implements UserService {
 

@@ -5,10 +5,6 @@ import ru.javawebinar.topjava.model.User;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * User: gkislin
- * Date: 22.08.2014
- */
 public interface UserRepository {
     User save(User user);
 

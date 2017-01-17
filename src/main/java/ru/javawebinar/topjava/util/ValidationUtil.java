@@ -4,10 +4,6 @@ package ru.javawebinar.topjava.util;
 import ru.javawebinar.topjava.model.BaseEntity;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
-/**
- * User: gkislin
- * Date: 14.05.2014
- */
 public class ValidationUtil {
     private ValidationUtil() {
     }

@@ -7,10 +7,6 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * User: gkislin
- * Date: 22.08.2014
- */
 public interface UserService {
 
     User save(User user);

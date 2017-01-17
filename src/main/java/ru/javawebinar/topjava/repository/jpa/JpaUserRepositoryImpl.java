@@ -15,10 +15,6 @@ import javax.persistence.criteria.Root;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * User: gkislin
- * Date: 29.08.2014
- */
 @Repository
 @Transactional(readOnly = true)
 public class JpaUserRepositoryImpl implements UserRepository {
