@@ -3,10 +3,10 @@ package ru.javawebinar.topjava.model;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
@@ -38,7 +38,7 @@ public class User extends NamedEntity {
     @Length(min = 5)
     private String password;
 
-    @Column(name = "enabled", nullable = false)
+    @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
     private boolean enabled = true;
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
@@ -51,7 +51,7 @@ public class User extends NamedEntity {
     private Set<Role> roles;
 
     @Column(name = "calories_per_day", columnDefinition = "int default 2000")
-    @Digits(fraction = 0, integer = 4)
+    @Range(min = 10, max = 10000)
     private int caloriesPerDay = MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
     public User() {
@@ -121,7 +121,7 @@ public class User extends NamedEntity {
     @Override
     public String toString() {
         return "User (" +
-                "id=" + id +
+                "id=" + getId() +
                 ", email=" + email +
                 ", name=" + name +
                 ", enabled=" + enabled +
