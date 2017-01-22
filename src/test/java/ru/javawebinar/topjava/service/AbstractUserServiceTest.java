@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,7 +24,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     public void setUp() throws Exception {
         service.evictCache();
     }
-        
+
     @Test
     public void testSave() throws Exception {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, Collections.singleton(Role.ROLE_USER));
@@ -78,5 +79,14 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         updated.setCaloriesPerDay(330);
         service.update(updated);
         MATCHER.assertEquals(updated, service.get(USER_ID));
+    }
+
+    @Test
+    public void testValidation() throws Exception {
+        validateRootCause(() -> service.save(new User(null, "  ", "invalid@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.save(new User(null, "User", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.save(new User(null, "User", "invalid@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.save(new User(null, "User", "invalid@yandex.ru", "password", 9, true, Collections.emptySet())), ConstraintViolationException.class);
+        validateRootCause(() -> service.save(new User(null, "User", "invalid@yandex.ru", "password", 10001, true, Collections.emptySet())), ConstraintViolationException.class);
     }
 }
