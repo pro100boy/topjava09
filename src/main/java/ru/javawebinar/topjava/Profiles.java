@@ -10,7 +10,7 @@ public class Profiles {
             JPA = "jpa",
             DATAJPA = "datajpa";
 
-    public static final String DB_IMPLEMENTATION = JDBC;
+    public static final String DB_IMPLEMENTATION = DATAJPA;
 
     public static String getActiveDbProfile() {
         try {
