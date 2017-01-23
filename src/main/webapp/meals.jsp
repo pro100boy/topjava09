@@ -9,8 +9,7 @@
 </head>
 <body>
 <section>
-    <h2><a href="index.html">Home</a></h2>
-    <h2>Meal list</h2>
+    <h3>Meal list</h3>
     <form method="post" action="meals?action=filter">
         <dl>
             <dt>From Date:</dt>
