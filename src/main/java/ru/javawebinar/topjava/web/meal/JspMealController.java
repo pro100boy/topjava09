@@ -2,8 +2,9 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import ru.javawebinar.topjava.model.Meal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,25 +25,25 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 @RequestMapping(value = "/meals")
 public class JspMealController extends AbstractMealController {
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
         super.delete(getId(request));
         return "redirect:/meals";
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
         model.addAttribute("meal", super.get(getId(request)));
         return "meal";
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("meal", new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), "", 1000));
         return "meal";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public String updateOrCreate(HttpServletRequest request) {
         String id = request.getParameter("id");
         Meal userMeal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
@@ -58,7 +59,7 @@ public class JspMealController extends AbstractMealController {
         return "redirect:/meals";
     }
 
-    @RequestMapping(value = "/filter", method = RequestMethod.POST)
+    @PostMapping("/filter")
     public String getBetween(HttpServletRequest request, Model model) {
         LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
         LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
