@@ -11,6 +11,8 @@
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>
+                <!--громоздко, но иногда удабно смотреть-->
+                <property name="prettyPrint" value="true"/>
             </bean>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes">
@@ -44,6 +46,16 @@
             </property>
         </bean>
     -->
+
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="ru.javawebinar.topjava.util.DateTimeUtil.LocalDateConverter"/>
+                <bean class="ru.javawebinar.topjava.util.DateTimeUtil.LocalTimeConverter"/>
+            </set>
+        </property>
+    </bean>
+
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
           p:cacheSeconds="60"
           p:defaultEncoding="UTF-8">
