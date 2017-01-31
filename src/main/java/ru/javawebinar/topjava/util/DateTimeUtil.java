@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class DateTimeUtil {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    public static final DateTimeFormatter DATE_TIME_FORMATTER_ISO = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     public static final LocalDate MIN_DATE = LocalDate.of(1, 1, 1);
     public static final LocalDate MAX_DATE = LocalDate.of(3000, 1, 1);
