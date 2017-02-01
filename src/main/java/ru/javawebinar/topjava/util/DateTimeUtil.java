@@ -1,12 +1,15 @@
 package ru.javawebinar.topjava.util;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.format.Formatter;
 import org.springframework.util.StringUtils;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  * GKislin
@@ -57,6 +60,32 @@ public class DateTimeUtil {
         @Override
         public LocalTime convert(String str) {
             return StringUtils.isEmpty(str) ? null : LocalTime.parse(str);
+        }
+    }
+
+    public static class LocalDateFormatter implements Formatter<LocalDate> {
+
+        @Override
+        public LocalDate parse(String text, Locale locale) throws ParseException {
+            return parseLocalDate(text);
+        }
+
+        @Override
+        public String print(LocalDate lt, Locale locale) {
+            return lt.format(DateTimeFormatter.ISO_LOCAL_DATE);
+        }
+    }
+
+    public static class LocalTimeFormatter implements Formatter<LocalTime> {
+
+        @Override
+        public LocalTime parse(String text, Locale locale) throws ParseException {
+            return parseLocalTime(text);
+        }
+
+        @Override
+        public String print(LocalTime lt, Locale locale) {
+            return lt.format(DateTimeFormatter.ISO_LOCAL_TIME);
         }
     }
 }
