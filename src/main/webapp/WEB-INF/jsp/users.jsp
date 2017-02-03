@@ -5,6 +5,8 @@
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
+<script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>
+<script type="text/javascript" src="resources/js/userDatatables.js" defer></script>
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
@@ -14,11 +16,11 @@
             <h3><spring:message code="users.title"/></h3>
 
             <div class="view-box">
-                <a class="btn btn-sm btn-info">
+                <a class="btn btn-sm btn-info" onclick="add()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
 
-                <table class="table table-striped">
+                <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
                         <th><spring:message code="users.name"/></th>
@@ -38,13 +40,13 @@
                             <td>${user.roles}</td>
                             <td>
                                 <input type="checkbox"
-                                       <c:if test="${user.enabled}">checked</c:if>/>
+                                       <c:if test="${user.enabled}">checked</c:if> id="${user.id}"/>
                             </td>
                             <td><fmt:formatDate value="${user.registered}" pattern="dd-MMMM-yyyy"/></td>
-                            <td><a class="btn btn-xs btn-primary">
+                            <td><a class="btn btn-xs btn-primary edit"  id="${user.id}">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a></td>
-                            <td><a class="btn btn-xs btn-danger">
+                            <td><a class="btn btn-xs btn-danger delete" id="${user.id}">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </a></td>
                         </tr>
@@ -55,5 +57,53 @@
     </div>
 </div>
 <jsp:include page="fragments/footer.jsp"/>
+
+<div class="modal fade" id="editRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title"><spring:message code="users.add"/></h2>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" method="post" id="detailsForm">
+                    <input type="text" hidden="hidden" id="id" name="id">
+
+                    <div class="form-group">
+                        <label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="control-label col-xs-3"><spring:message code="users.email"/></label>
+
+                        <div class="col-xs-9">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="<spring:message code="users.email"/>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="control-label col-xs-3"><spring:message code="users.password"/></label>
+
+                        <div class="col-xs-9">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="<spring:message code="users.password"/>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
