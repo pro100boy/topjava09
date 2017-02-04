@@ -19,6 +19,7 @@
         <tomcat.version>8.5.5</tomcat.version>
         <spring.version>4.3.4.RELEASE</spring.version>
         <spring-data-jpa.version>1.10.6.RELEASE</spring-data-jpa.version>
+        <spring-security.version>4.2.1.RELEASE</spring-security.version>
         <jackson-json.version>2.8.6</jackson-json.version>
 
         <!-- Logging -->
@@ -187,6 +188,19 @@
             </exclusions>
         </dependency>
 
+        <!--security-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+
+        <!--hibernate-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
