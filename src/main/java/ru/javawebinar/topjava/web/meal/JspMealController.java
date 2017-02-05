@@ -21,8 +21,8 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
  * gkislin
  * 16.10.2016
  */
-@Controller
-@RequestMapping(value = "/meals")
+/*@Controller
+@RequestMapping(value = "/meals")*/
 public class JspMealController extends AbstractMealController {
 
     @GetMapping("/delete")
