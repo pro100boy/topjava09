@@ -18,8 +18,10 @@ function makeEditable() {
 
 function add() {
     //$('#id').val(null);
-    // очищаем поля ввода перед показом формы
-    // find(":input") - селектор, выбор всех элементов input
+    /**
+    * очищаем поля ввода перед показом формы
+    * find(":input") - селектор, выбор всех элементов input
+    */
     form.find(":input").val("");
     $('#editRow').modal();
 }
