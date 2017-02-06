@@ -12,38 +12,41 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><spring:message code="meals.title"/></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>
+                        <spring:message code="meals.title"/>
+                    </h4>
+                </div>
+            </div>
+            <h4><span class="label label-info"><spring:message code="meals.filter"/></span></h4>
             <div class="view-box">
                 <div class="row">
-                    <div class="col-sm-7">
+                    <div class="col-sm-9">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <form method="post" class="form-horizontal" role="form" id="filter">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="startDate"><spring:message
-                                                code="meals.startDate"/>:</label>
+                                        <label class="control-label col-sm-2" for="startDate"><spring:message code="meals.startDate"/>:</label>
 
                                         <div class="col-sm-4">
                                             <input class="form-control" type="date" name="startDate" id="startDate">
                                         </div>
 
-                                        <label class="control-label col-sm-3" for="startTime"><spring:message
-                                                code="meals.startTime"/>:</label>
+                                        <label class="control-label col-sm-3" for="startTime"><spring:message code="meals.startTime"/>:</label>
 
                                         <div class="col-sm-3">
                                             <input class="form-control" type="time" name="startTime" id="startTime">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="endDate"><spring:message
-                                                code="meals.endDate"/>:</label>
+                                        <label class="control-label col-sm-2" for="endDate"><spring:message code="meals.endDate"/>:</label>
 
                                         <div class="col-sm-4">
                                             <input class="form-control" type="date" name="endDate" id="endDate">
                                         </div>
 
-                                        <label class="control-label col-sm-3" for="endTime"><spring:message
-                                                code="meals.endTime"/>:</label>
+                                        <label class="control-label col-sm-3" for="endTime"><spring:message code="meals.endTime"/>:</label>
 
                                         <div class="col-sm-3">
                                             <input class="form-control" type="time" name="endTime" id="endTime">
@@ -52,18 +55,21 @@
                                 </form>
                             </div>
                             <div class="panel-footer text-right">
+                                <spring:message code="common.cancel" var="common_cancel"/>
                                 <a class="btn btn-danger" type="button" onclick="clearFilter()">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-unchecked" aria-hidden="true" title="${common_cancel}"></span>
                                 </a>
-                                <a class="btn btn-primary" type="button" onclick="updateTableMeal()">
-                                    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                                <spring:message code="meals.filter" var="meals_filter"/>
+                                <a class="btn btn-primary" type="button" onclick="updateTable()">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true" title="${meals_filter}"></span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <a class="btn btn-info" onclick="add()">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <spring:message code="meals.add" var="meals_add"/>
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" title="${meals_add}"></span>
                 </a>
                 <table class="table table-striped display" id="datatable">
                     <thead>

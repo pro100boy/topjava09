@@ -13,11 +13,19 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><spring:message code="users.title"/></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>
+                        <spring:message code="users.title"/>
+                    </h4>
+                </div>
+            </div>
+            <%--<h3><spring:message code="users.title"/></h3>--%>
 
             <div class="view-box">
+                <spring:message code="users.add" var="users_add"/>
                 <a class="btn btn-sm btn-info" onclick="add()">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" title="${users_add}"></span>
                 </a>
 
                 <table class="table table-striped display" id="datatable">
