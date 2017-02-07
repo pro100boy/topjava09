@@ -7,6 +7,7 @@ function updateTable() {
 
 // http://stackoverflow.com/questions/901712/how-do-i-check-if-a-checkbox-is-checked-in-jquery
 function enable(chkbox, id) {
+    // http://ru.stackoverflow.com/a/549355
     var isChecked = chkbox.is(":checked");
 
     $.ajax({
