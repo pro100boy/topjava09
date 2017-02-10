@@ -1,30 +1,29 @@
-var ajaxUrl = 'ajax/admin/users/';
+var ajaxUrl = "ajax/profile/meals/";
 var datatableApi;
 
+// $(document).ready(function () {
 function updateTable() {
-    $.get(ajaxUrl, updateTableByData);
+    $.ajax({
+        type: "POST",
+        url: ajaxUrl + "filter",
+        data: $("#filter").serialize(),
+        success: updateTableByData
+    });
 }
 
-// $(document).ready(function () {
 $(function () {
-    datatableApi = $('#datatable').DataTable({
+    datatableApi = $("#datatable").DataTable({
         "paging": false,
         "info": true,
         "columns": [
             {
-                "data": "name"
+                "data": "dateTime"
             },
             {
-                "data": "email"
+                "data": "description"
             },
             {
-                "data": "roles"
-            },
-            {
-                "data": "enabled"
-            },
-            {
-                "data": "registered"
+                "data": "calories"
             },
             {
                 "defaultContent": "Edit",
@@ -38,7 +37,7 @@ $(function () {
         "order": [
             [
                 0,
-                "asc"
+                "desc"
             ]
         ]
     });
