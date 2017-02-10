@@ -1,13 +1,11 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class MealAjaxController extends AbstractMealController {
         super.delete(id);
     }
 
-    @PostMapping
+    /*@PostMapping
     public void updateOrCreate(@RequestParam("id") Integer id,
                                @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
                                @RequestParam("description") String description,
@@ -35,6 +33,12 @@ public class MealAjaxController extends AbstractMealController {
         } else {
             super.update(meal, id);
         }
+    }*/
+
+    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Meal create(@ModelAttribute("Meal") Meal meal) {
+        //TODO LocalDateTime converter added in formatters
+        return super.create(meal);
     }
 
     @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)

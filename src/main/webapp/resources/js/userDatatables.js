@@ -19,7 +19,9 @@ function enable(chkbox, id) {
              * closest - определяем строку, в которой находится checkbox
              * http://jquery.page2page.ru/index.php5/Ближайший_подходящий_предок
              */
-            chkbox.closest('tr').css("text-decoration", isChecked ? "none" : "line-through");
+            //chkbox.closest('tr').css("text-decoration", isChecked ? "none" : "line-through");
+            chkbox.closest('tr').fadeTo(300, isChecked ? 1 : 0.3);
+
             successNoty(isChecked ? 'Enabled' : 'Disabled');
         }
     });
@@ -63,10 +65,11 @@ $(function () {
         ]
     });
 
-    // зачеркиваем текст в tr с неактивными checkbox
+    // затемняем tr с неактивными checkbox
     $(':checkbox').each(function () {
         if (!$(this).is(":checked")) {
-            $(this).closest('tr').css("text-decoration", "line-through");
+            //$(this).closest('tr').css("text-decoration", "line-through");
+            $(this).closest('tr').css("opacity", 0.3);
         }
     });
 
