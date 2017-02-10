@@ -43,7 +43,7 @@
                                        <c:if test="${user.enabled}">checked</c:if> onclick="enable($(this), ${user.id})"/>
                             </td>
                             <td><fmt:formatDate value="${user.registered}" pattern="dd-MMMM-yyyy"/></td>
-                            <td><a class="btn btn-xs btn-primary edit"  id="${user.id}">
+                            <td><a class="btn btn-xs btn-primary" onclick="updateRow(${user.id})">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a></td>
                             <td><a class="btn btn-xs btn-danger" onclick="deleteRow(${user.id})">
