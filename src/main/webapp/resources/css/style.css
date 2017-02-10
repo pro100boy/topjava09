@@ -9,3 +9,7 @@
 .footer {
     padding-bottom: 15px;
 }
+
+.disabled {
+    opacity: 0.3;
+}
