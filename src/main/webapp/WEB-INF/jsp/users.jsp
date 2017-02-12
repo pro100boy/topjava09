@@ -15,7 +15,7 @@
             <h3><spring:message code="users.title"/></h3>
 
             <div class="view-box">
-                <a class="btn btn-sm btn-info" onclick="add()">
+                <a class="btn btn-info" onclick="add('<spring:message code="users.add"/>')">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
 
@@ -43,7 +43,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"><spring:message code="users.add"/></h2>
+                <h2 class="modal-title" id="modalTitle"></h2>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" method="post" id="detailsForm">
@@ -53,7 +53,8 @@
                         <label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="<spring:message code="users.name"/>">
                         </div>
                     </div>
 
@@ -61,15 +62,18 @@
                         <label for="email" class="control-label col-xs-3"><spring:message code="users.email"/></label>
 
                         <div class="col-xs-9">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="<spring:message code="users.email"/>">
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="<spring:message code="users.email"/>">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="password" class="control-label col-xs-3"><spring:message code="users.password"/></label>
+                        <label for="password" class="control-label col-xs-3"><spring:message
+                                code="users.password"/></label>
 
                         <div class="col-xs-9">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="<spring:message code="users.password"/>">
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="<spring:message code="users.password"/>">
                         </div>
                     </div>
 
@@ -86,4 +90,11 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    var i18n = [];
+    var editTitle = '<spring:message code="users.edit"/>';
+    <c:forEach var='key' items='<%=new String[]{"common.deleted","common.saved","common.enabled","common.disabled","common.failed"}%>'>
+    i18n['${key}'] = '<spring:message code="${key}"/>';
+    </c:forEach>
+</script>
 </html>
