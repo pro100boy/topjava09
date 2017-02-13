@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.service;
 
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -26,6 +27,8 @@ public interface MealService {
     Collection<Meal> getAll(int userId);
 
     Meal update(Meal meal, int userId) throws NotFoundException;
+
+    void update(MealTo mealTo, int userId);
 
     Meal save(Meal meal, int userId);
 

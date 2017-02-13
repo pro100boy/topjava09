@@ -1,5 +1,6 @@
 var ajaxUrl = 'ajax/admin/users/';
 var datatableApi;
+var contextModalTitle = "users.edit";
 
 function updateTable() {
     $.get(ajaxUrl, updateTableByData);

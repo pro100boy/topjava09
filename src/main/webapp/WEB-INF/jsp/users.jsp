@@ -90,11 +90,5 @@
     </div>
 </div>
 </body>
-<script type="text/javascript">
-    var i18n = [];
-    var editTitle = '<spring:message code="users.edit"/>';
-    <c:forEach var='key' items='<%=new String[]{"common.deleted","common.saved","common.enabled","common.disabled","common.failed"}%>'>
-    i18n['${key}'] = '<spring:message code="${key}"/>';
-    </c:forEach>
-</script>
+
 </html>

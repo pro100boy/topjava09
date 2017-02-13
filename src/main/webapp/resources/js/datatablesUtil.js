@@ -2,6 +2,31 @@ var form;
 
 function makeEditable() {
     form = $('#detailsForm');
+
+    $('#dateTime').datetimepicker({
+        format: 'Y-m-d H:i'
+    });
+
+    $('#startDate').datetimepicker({
+        timepicker: false,
+        format: 'Y-m-d'
+    });
+
+    $('#endDate').datetimepicker({
+        timepicker: false,
+        format: 'Y-m-d'
+    });
+
+    $('#startTime').datetimepicker({
+        datepicker: false,
+        format: 'H:i'
+    });
+
+    $('#endTime').datetimepicker({
+        datepicker: false,
+        format: 'H:i'
+    });
+
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(event, jqXHR, options, jsExc);
     });
@@ -16,10 +41,11 @@ function add(title) {
 }
 
 function updateRow(id) {
-    $('#modalTitle').html(editTitle);
+    $('#modalTitle').html(i18n[contextModalTitle]);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            form.find("input[name='" + key + "']").val(key === "dateTime" ? value.replace('T', ' ').substr(0, 16) : value);
+            //form.find("input[name='" + key + "']").val(value);
         });
         $('#editRow').modal();
     });
