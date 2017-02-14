@@ -6,9 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.to.MealWithExceed;
-import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -39,16 +37,25 @@ public class MealAjaxController extends AbstractMealController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdate(@Valid MealTo mealTo, BindingResult result) {
+    public ResponseEntity<String> createOrUpdate(@Valid Meal meal, BindingResult result) {
+        // TODO: избавиться от дублирования кода в AdminAjaxController
         if (result.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
             return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+            // не отображается в Noty корректная инфа об ошибке
+            //ValidationUtil.getStringResponseEntity(result);
         }
-        if (mealTo.isNew()) {
+        // TODO: можно без mealTo обойтись
+        /*if (mealTo.isNew()) {
             super.create(MealsUtil.createNewFromTo(mealTo));
         } else {
             super.update(mealTo, mealTo.getId());
+        }*/
+        if (meal.isNew()) {
+            super.create(meal);
+        } else {
+            super.update(meal, meal.getId());
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

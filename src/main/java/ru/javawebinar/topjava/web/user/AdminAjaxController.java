@@ -38,11 +38,15 @@ public class AdminAjaxController extends AbstractUserController {
 
     @PostMapping
     public ResponseEntity<String> createOrUpdate(@Valid UserTo userTo, BindingResult result) {
+        // TODO: избавиться от дублирования кода в MealAjaxController, но тогда не отображается в Noty корректная инфа
         if (result.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
             return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
+            // не отображается в Noty корректная инфа об ошибке
+            //ValidationUtil.getStringResponseEntity(result);
         }
+
         if (userTo.isNew()) {
             super.create(UserUtil.createNewFromTo(userTo));
         } else {
