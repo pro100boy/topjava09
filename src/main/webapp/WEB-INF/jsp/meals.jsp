@@ -108,7 +108,7 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input type="hidden" id="id" name="id">
+                    <input type="text" hidden="hidden" id="id" name="id">
 
                     <div class="form-group">
                         <label for="dateTime" class="control-label col-xs-3"><spring:message
