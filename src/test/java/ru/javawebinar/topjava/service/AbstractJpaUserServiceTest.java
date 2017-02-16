@@ -20,6 +20,7 @@ abstract public class AbstractJpaUserServiceTest extends AbstractUserServiceTest
     private JpaUtil jpaUtil;
 
     @Before
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         jpaUtil.clear2ndLevelHibernateCache();
