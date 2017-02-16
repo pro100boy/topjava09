@@ -26,14 +26,15 @@
 
 <div class="jumbotron">
     <div class="container">
-        <c:if test="${error}">
+        <c:if test="${param.error}">
             <div class="error">
                     ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
             </div>
         </c:if>
-        <c:if test="${not empty message}">
+        <%--http://stackoverflow.com/questions/10932677/check-if-parameter-exists-in-expression-language--%>
+        <c:if test="${not empty param.message}">
             <div class="message">
-                <spring:message code="${message}"/>
+                <spring:message code="${param.message}"/>
             </div>
         </c:if>
         <p></p>
@@ -83,8 +84,8 @@
 <jsp:include page="fragments/footer.jsp"/>
 <script type="text/javascript">
     function setCredentials(username, password) {
-        $('input[name="username"]').val(username)
-        $('input[name="password"]').val(password)
+        $('input[name="username"]').val(username);
+        $('input[name="password"]').val(password);
     }
 </script>
 </body>
