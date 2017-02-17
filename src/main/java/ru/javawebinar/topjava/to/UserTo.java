@@ -83,6 +83,10 @@ public class UserTo implements HasId, Serializable {
         return caloriesPerDay;
     }
 
+    public void setCaloriesPerDay(Integer caloriesPerDay) {
+        this.caloriesPerDay = caloriesPerDay;
+    }
+
     @Override
     public String toString() {
         return "UserTo{" +
