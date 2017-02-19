@@ -11,6 +11,7 @@ import ru.javawebinar.topjava.util.UserUtil;
 import ru.javawebinar.topjava.util.ValidationUtil;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class AdminAjaxController extends AbstractUserController {
     public ResponseEntity<String> createOrUpdate(@Valid UserTo userTo, BindingResult result) {
         if (result.hasErrors()) {
             // TODO change to exception handler
-            return ValidationUtil.getErrorResponse(result);
+            throw new ValidationException(ValidationUtil.getErrorCouse(result));
         }
         if (userTo.isNew()) {
             super.create(UserUtil.createNewFromTo(userTo));

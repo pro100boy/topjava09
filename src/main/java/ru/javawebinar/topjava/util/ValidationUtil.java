@@ -52,4 +52,10 @@ public class ValidationUtil {
         result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
         return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
+    public static String getErrorCouse(BindingResult result) {
+        StringBuilder sb = new StringBuilder();
+        result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
+        return sb.toString();
+    }
 }
