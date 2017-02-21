@@ -36,28 +36,6 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-<!--
-    <servlet>
-        <servlet-name>userServlet</servlet-name>
-        <servlet-class>ru.javawebinar.topjava.web.UserServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>userServlet</servlet-name>
-        <url-pattern>/users</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>mealServlet</servlet-name>
-        <servlet-class>ru.javawebinar.topjava.web.MealServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>mealServlet</servlet-name>
-        <url-pattern>/meals</url-pattern>
-    </servlet-mapping>
--->
-
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -77,6 +55,7 @@
 
     <!-- Spring Security -->
     <!--Починить UTF-8 в редактировании профиля и регистрации (если кодировка по умолчанию у вас не UTF-8)-->
+    <!--http://stackoverflow.com/a/20864108-->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

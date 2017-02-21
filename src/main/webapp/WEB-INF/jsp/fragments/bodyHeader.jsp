@@ -15,6 +15,7 @@
                             <sec:authorize access="hasRole('ROLE_ADMIN')">
                                 <a class="btn btn-info" href="users"><spring:message code="users.title"/></a>
                             </sec:authorize>
+                            <%--см. класс ModelInterceptor. там в модель добавляется атрибут userTo. используется для реализации сквозного функционала, в данном случае добавляет атрибут в модель после выполнения любого запроса контроллера--%>
                             <a class="btn btn-info" role="button" href="profile">${userTo.name} <spring:message
                                     code="app.profile"/></a>
                             <button class="btn btn-primary" type="submit">
@@ -23,7 +24,7 @@
                         </sec:authorize>
                     </form:form>
                 </li>
-                <li><jsp:include page="language.jsp"/></li>
+                <jsp:include page="language.jsp"/>
             </ul>
         </div>
     </div>

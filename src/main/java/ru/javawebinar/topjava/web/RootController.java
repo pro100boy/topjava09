@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,7 +27,7 @@ public class RootController extends AbstractUserController {
         return "redirect:meals";
     }
 
-//    @Secured("ROLE_ADMIN")
+    //    @Secured("ROLE_ADMIN")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
     public String users() {
@@ -50,14 +51,34 @@ public class RootController extends AbstractUserController {
 
     @PostMapping("/profile")
     public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
-        if (result.hasErrors()) {
+        // плохой код
+        /*if (result.hasErrors()) {
             return "profile";
         } else {
-            super.update(userTo);
-            AuthorizedUser.get().update(userTo);
-            status.setComplete();
-            return "redirect:meals";
+            try {
+                super.update(userTo);
+                AuthorizedUser.get().update(userTo);
+                status.setComplete();
+                return "redirect:meals";
+            } catch (DataIntegrityViolationException e) {
+                result.rejectValue("email", "exception.email");
+            }
         }
+        return "profile";*/
+
+        // наверное нужно так
+        if (!result.hasErrors())
+        {
+            try {
+                super.update(userTo);
+                AuthorizedUser.get().update(userTo);
+                status.setComplete();
+                return "redirect:meals";
+            } catch (DataIntegrityViolationException e) {
+                result.rejectValue("email", "exception.email");
+            }
+        }
+        return "profile";
     }
 
     @GetMapping("/register")
@@ -69,13 +90,31 @@ public class RootController extends AbstractUserController {
 
     @PostMapping("/register")
     public String saveRegister(@Valid UserTo userTo, BindingResult result, SessionStatus status, ModelMap model) {
-        if (result.hasErrors()) {
+        /*if (result.hasErrors()) {
             model.addAttribute("register", true);
             return "profile";
         } else {
-            super.create(UserUtil.createNewFromTo(userTo));
-            status.setComplete();
-            return "redirect:login?message=app.registered&username=" + userTo.getEmail();
+            try {
+                super.create(UserUtil.createNewFromTo(userTo));
+                status.setComplete();
+                return "redirect:login?message=app.registered&username=" + userTo.getEmail();
+            } catch (DataIntegrityViolationException e) {
+                result.rejectValue("email", "exception.email");
+            }
         }
+        return "profile";*/
+
+        if (!result.hasErrors()) {
+            try {
+                super.create(UserUtil.createNewFromTo(userTo));
+                status.setComplete();
+                return "redirect:login?message=app.registered&username=" + userTo.getEmail();
+            } catch (DataIntegrityViolationException ex) {
+                result.rejectValue("email", "exception.email");
+            }
+        }
+        // если ошибок в result нет, то сюда выполнение не дойдет
+        model.addAttribute("register", true);
+        return "profile";
     }
 }

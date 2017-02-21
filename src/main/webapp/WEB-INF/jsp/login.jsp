@@ -5,11 +5,16 @@
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
+<script>parseUrlQuery();</script>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-brand"><spring:message code="app.title"/></div>
+
         <div class="navbar-collapse collapse">
+
+            <%--http://www.tutorialrepublic.com/codelab.php?topic=bootstrap&file=dropdowns-within-nav--%>
+            <%--https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_navbar_collapse&stacked=h--%>
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form:form class="navbar-form navbar-right" role="form" action="spring_security_check"
@@ -25,8 +30,9 @@
                         </button>
                     </form:form>
                 </li>
-                <li><jsp:include page="fragments/language.jsp"/></li>
+                <jsp:include page="fragments/language.jsp"/>
             </ul>
+
         </div>
     </div>
 </div>
@@ -100,5 +106,20 @@
         $('input[name="password"]').val(password);
     }
 </script>
+
+<script type="text/javascript">
+    function parseUrlQuery() {
+        var data = {};
+        if(location.search) {
+            var pair = (location.search.substr(1)).split('&');
+            for(var i = 0; i < pair.length; i ++) {
+                var param = pair[i].split('=');
+                data[param[0]] = param[1];
+            }
+        }
+        return data;
+    }
+</script>
+
 </body>
 </html>

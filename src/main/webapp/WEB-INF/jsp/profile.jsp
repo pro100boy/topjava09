@@ -13,6 +13,7 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
+            <%--см. класс ModelInterceptor. там в модель добавляется атрибут userTo. используется для реализации сквозного функционала, в данном случае добавляет атрибут в модель после выполнения любого запроса контроллера--%>
             <h2>${userTo.name} <spring:message code="${register ? 'app.register' : 'app.profile'}"/></h2>
 
             <div class="view-box">

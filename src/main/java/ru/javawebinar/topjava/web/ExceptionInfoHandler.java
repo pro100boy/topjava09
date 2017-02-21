@@ -55,7 +55,7 @@ public class ExceptionInfoHandler {
     // http://stackoverflow.com/a/9003679
     // https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-adding-validation-to-a-rest-api/
     // https://dzone.com/articles/spring-31-valid-requestbody
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 400
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     @Order(Ordered.HIGHEST_PRECEDENCE + 2)

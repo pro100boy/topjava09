@@ -64,7 +64,7 @@ $(function () {
         "initComplete": makeEditable
     });
 
-    $.datetimepicker.setLocale(localeCode);
+    $.datetimepicker.setLocale(langID);
 
     var startDate = $('#startDate');
     var endDate = $('#endDate');
