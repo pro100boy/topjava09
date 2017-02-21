@@ -5,7 +5,7 @@
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
-<script>parseUrlQuery();</script>
+
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -107,7 +107,8 @@
     }
 </script>
 
-<script type="text/javascript">
+<%--заготовка для app.registered--%>
+<%--<script type="text/javascript">
     function parseUrlQuery() {
         var data = {};
         if(location.search) {
@@ -117,9 +118,10 @@
                 data[param[0]] = param[1];
             }
         }
+        alert(data);
         return data;
     }
-</script>
+</script>--%>
 
 </body>
 </html>
