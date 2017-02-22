@@ -3,8 +3,8 @@ package ru.javawebinar.topjava.web.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.User;
@@ -25,8 +25,11 @@ public abstract class AbstractUserController {
     @Autowired
     private UserService service;
 
-    @Autowired(required = false)
-    private ReloadableResourceBundleMessageSource messageSource;
+    /*@Autowired(required = false)
+    private ReloadableResourceBundleMessageSource messageSource;*/
+
+    @Autowired
+    private MessageSource messageSource;
 
     public List<User> getAll() {
         log.info("getAll");
