@@ -68,4 +68,14 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
+
+    @Test
+    public void testSameEmail() throws Exception {
+        // делаем по аналогии с testUpdate()
+        UserTo updatedTo = new UserTo(null, "NewUserName", "admin@gmail.com", "newUserPass", 1500);
+        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER))
+                .content(JsonUtil.writeValue(updatedTo)))
+                .andExpect(status().is2xxSuccessful());
+    }
 }

@@ -118,4 +118,25 @@ public class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER.contentListMatcher(ADMIN, USER)));
     }
+
+    @Test
+    public void testUpdateSameEmail() throws Exception {
+        User user = new User(USER);
+        user.setEmail("admin@gmail.com");
+        mockMvc.perform(put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(user)))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void testCreateSameEmail() throws Exception {
+        User admin = new User(null, "NewUserName", "user@yandex.ru", "newUserPass", 666, Role.ROLE_USER, Role.ROLE_ADMIN);
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(admin)))
+                .andExpect(status().is2xxSuccessful());
+    }
 }

@@ -25,7 +25,7 @@ public abstract class AbstractUserController {
     @Autowired
     private UserService service;
 
-    @Autowired
+    @Autowired(required = false)
     private ReloadableResourceBundleMessageSource messageSource;
 
     public List<User> getAll() {

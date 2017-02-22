@@ -9,6 +9,8 @@ import ru.javawebinar.topjava.util.UserUtil;
 import javax.validation.Valid;
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.UserUtil.updateFromTo;
+
 /**
  * User: grigory.kislin
  */
@@ -53,7 +55,8 @@ public class AdminAjaxController extends AbstractUserController {
         if (userTo.isNew()) {
             super.create(UserUtil.createNewFromTo(userTo));
         } else {
-            super.update(userTo);
+            User user = updateFromTo(get(userTo.getId()), userTo);
+            super.update(user, userTo.getId());
         }
     }
 
