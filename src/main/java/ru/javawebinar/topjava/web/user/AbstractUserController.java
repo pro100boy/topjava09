@@ -3,7 +3,6 @@ package ru.javawebinar.topjava.web.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.to.UserTo;
@@ -49,9 +48,9 @@ public abstract class AbstractUserController {
         service.update(user);
     }
 
-    public void update(UserTo userTo) {
+    public void update(UserTo userTo, int id) {
         log.info("update " + userTo);
-        checkIdConsistent(userTo, AuthorizedUser.id());
+        checkIdConsistent(userTo, id);
         service.update(userTo);
     }
 

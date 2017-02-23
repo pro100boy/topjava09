@@ -47,7 +47,7 @@ public class AdminAjaxController extends AbstractUserController {
         if (userTo.isNew()) {
             super.create(UserUtil.createNewFromTo(userTo));
         } else {
-            super.update(userTo);
+            super.update(userTo, userTo.getId());
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

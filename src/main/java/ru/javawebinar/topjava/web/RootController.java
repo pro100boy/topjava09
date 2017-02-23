@@ -53,7 +53,7 @@ public class RootController extends AbstractUserController {
         if (result.hasErrors()) {
             return "profile";
         } else {
-            super.update(userTo);
+            super.update(userTo, AuthorizedUser.id());
             AuthorizedUser.get().update(userTo);
             status.setComplete();
             return "redirect:meals";
