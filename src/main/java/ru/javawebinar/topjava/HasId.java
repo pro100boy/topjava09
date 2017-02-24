@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.util;
+package ru.javawebinar.topjava;
 
 /**
  * gkislin
@@ -9,5 +9,7 @@ public interface HasId {
 
     void setId(Integer id);
 
-    boolean isNew();
+    default boolean isNew() {
+        return (getId() == null);
+    }
 }

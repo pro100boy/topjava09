@@ -3,17 +3,14 @@ package ru.javawebinar.topjava.to;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
-import ru.javawebinar.topjava.util.HasId;
 import ru.javawebinar.topjava.util.UserUtil;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-public class UserTo implements HasId, Serializable {
+public class UserTo extends BaseTo implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    private Integer id;
 
     @NotBlank
     private String name;
@@ -33,21 +30,11 @@ public class UserTo implements HasId, Serializable {
     }
 
     public UserTo(Integer id, String name, String email, String password, int caloriesPerDay) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.email = email;
         this.password = password;
         this.caloriesPerDay = caloriesPerDay;
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getPassword() {
@@ -72,11 +59,6 @@ public class UserTo implements HasId, Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public boolean isNew() {
-        return id == null;
     }
 
     public Integer getCaloriesPerDay() {

@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.model;
 
 import org.hibernate.Hibernate;
-import ru.javawebinar.topjava.util.HasId;
+import ru.javawebinar.topjava.HasId;
 
 import javax.persistence.*;
 
@@ -24,7 +24,7 @@ public class BaseEntity implements HasId {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     // PROPERTY access for id due to bug: https://hibernate.atlassian.net/browse/HHH-3718
     @Access(value = AccessType.PROPERTY)
-    protected Integer id;
+    private Integer id;
 
     public BaseEntity() {
     }
@@ -41,11 +41,6 @@ public class BaseEntity implements HasId {
     @Override
     public Integer getId() {
         return id;
-    }
-
-    @Override
-    public boolean isNew() {
-        return (getId() == null);
     }
 
     @Override
