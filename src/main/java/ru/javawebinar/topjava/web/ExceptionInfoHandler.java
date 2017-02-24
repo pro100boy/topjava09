@@ -21,6 +21,7 @@ import java.util.Arrays;
  * Date: 23.09.2014
  */
 @ControllerAdvice(annotations = RestController.class)
+@Order(Ordered.HIGHEST_PRECEDENCE + 5)
 public class ExceptionInfoHandler {
     private static Logger LOG = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
