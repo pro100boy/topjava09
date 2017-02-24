@@ -1,8 +1,5 @@
 package ru.javawebinar.topjava.util;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import ru.javawebinar.topjava.HasId;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -46,11 +43,5 @@ public class ValidationUtil {
         } else if (bean.getId() != id) {
             throw new IllegalArgumentException(bean + " must be with id=" + id);
         }
-    }
-
-    public static ResponseEntity<String> getErrorResponse(BindingResult result) {
-        StringBuilder sb = new StringBuilder();
-        result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
-        return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }

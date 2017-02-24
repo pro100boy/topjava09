@@ -6,11 +6,15 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 /**
  * User: gkislin
@@ -20,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionInfoHandler {
     private static Logger LOG = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
-//  http://stackoverflow.com/a/22358422/548473
+    //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
     @ResponseBody
@@ -37,12 +41,37 @@ public class ExceptionInfoHandler {
         return logAndGetErrorInfo(req, e, true);
     }
 
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    @Order(Ordered.HIGHEST_PRECEDENCE + 2)
+    public ErrorInfo bindValidationError(HttpServletRequest req, BindingResult result) {
+        return logAndGetValidationErrorInfo(req, result);
+    }
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    @Order(Ordered.HIGHEST_PRECEDENCE + 2)
+    public ErrorInfo restValidationError(HttpServletRequest req, MethodArgumentNotValidException e) {
+        return logAndGetValidationErrorInfo(req, e.getBindingResult());
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     @ResponseBody
     @Order(Ordered.LOWEST_PRECEDENCE)
     public ErrorInfo handleError(HttpServletRequest req, Exception e) {
         return logAndGetErrorInfo(req, e, true);
+    }
+
+    public static ErrorInfo logAndGetValidationErrorInfo(HttpServletRequest req, BindingResult result) {
+        String[] details = result.getFieldErrors().stream()
+                .map(fe -> fe.getField() + ' ' + fe.getDefaultMessage())
+                .toArray(String[]::new);
+
+        LOG.warn("Validation exception at request " + req.getRequestURL() + ": " + Arrays.toString(details));
+        return new ErrorInfo(req.getRequestURL(), "ValidationException", details);
     }
 
     public static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logException) {
