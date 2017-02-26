@@ -97,7 +97,7 @@ function successNoty(key) {
         text: i18n[key],
         type: 'success',
         layout: 'bottomRight',
-        timeout: true
+        timeout: 500
     });
 }
 
