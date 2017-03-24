@@ -2,6 +2,10 @@
 language: java
 jdk: oraclejdk8
 
+# https://docs.travis-ci.com/user/environment-variables/
+env:
+  - TOPJAVA_ROOT=$TRAVIS_BUILD_DIR
+
 #https://dzone.com/articles/travis-ci-tutorial-java-projects
 cache:
   directories:
